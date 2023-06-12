@@ -1,76 +1,76 @@
 <?php
-session_start();
-Require '../Functions/connect.php';
-Require 'checksession.php';
-// check_session();
-if (isset($_SESSION['user'])){
+// session_start();
+// Require '../Functions/connect.php';
+// Require 'checksession.php';
+// // check_session();
+// if (isset($_SESSION['user'])){
     
-$var_session=$_SESSION["user"];
+// $var_session=$_SESSION["user"];
 
-$user_query = mysqli_query($conn,"select * from lender_reg where email='$var_session'");
-$user_data = mysqli_fetch_assoc($user_query);
-$lender_id=$user_data['id'];
-$lender_transactions = mysqli_query($conn,"select * from lender_transactions where id='$lender_id'");
-$lender_trans = mysqli_fetch_assoc($lender_transactions);
-$updated_details = mysqli_query($conn, "SELECT * FROM lender_transactions WHERE lender_id={$user_data['id']}");
-$updated_commision = mysqli_query($conn, "SELECT * FROM agent_commision WHERE lender_id={$user_data['id']}");
-$sum = 0;
-while ($row = mysqli_fetch_assoc($updated_details)) {
-    $sum += $row['lent_amount'];
-}
-$comm = 0;
-while ($row = mysqli_fetch_assoc($updated_commision)) {
-    $comm += $row['commision'];
-}
-$updated_returns = mysqli_query($conn, "SELECT * FROM agent_returns WHERE lender_id={$user_data['id']}");
-$returns = 0;
-while ($rowss= mysqli_fetch_assoc($updated_returns)) {
-    $returns += $rowss['total_amount'];
-}
-$lender_id = $user_data['id'];
+// $user_query = mysqli_query($conn,"select * from lender_reg where email='$var_session'");
+// $user_data = mysqli_fetch_assoc($user_query);
+// $lender_id=$user_data['id'];
+// $lender_transactions = mysqli_query($conn,"select * from lender_transactions where id='$lender_id'");
+// $lender_trans = mysqli_fetch_assoc($lender_transactions);
+// $updated_details = mysqli_query($conn, "SELECT * FROM lender_transactions WHERE lender_id={$user_data['id']}");
+// $updated_commision = mysqli_query($conn, "SELECT * FROM agent_commision WHERE lender_id={$user_data['id']}");
+// $sum = 0;
+// while ($row = mysqli_fetch_assoc($updated_details)) {
+//     $sum += $row['lent_amount'];
+// }
+// $comm = 0;
+// while ($row = mysqli_fetch_assoc($updated_commision)) {
+//     $comm += $row['commision'];
+// }
+// $updated_returns = mysqli_query($conn, "SELECT * FROM agent_returns WHERE lender_id={$user_data['id']}");
+// $returns = 0;
+// while ($rowss= mysqli_fetch_assoc($updated_returns)) {
+//     $returns += $rowss['total_amount'];
+// }
+// $lender_id = $user_data['id'];
 
-$sql = "SELECT SUM(amount) AS balance
-        FROM top_up
-        WHERE lender_id = '$lender_id'";
+// $sql = "SELECT SUM(amount) AS balance
+//         FROM top_up
+//         WHERE lender_id = '$lender_id'";
 
-$result = $conn->query($sql);
+// $result = $conn->query($sql);
 
-if ($result) {
-    $row = $result->fetch_assoc();
-    $balance = $row['balance'];
-} else {
-    echo "Error executing query: " . $conn->error;
-}
+// if ($result) {
+//     $row = $result->fetch_assoc();
+//     $balance = $row['balance'];
+// } else {
+//     echo "Error executing query: " . $conn->error;
+// }
 
-$updated_balance = $balance - $sum+$returns-$comm;
+// $updated_balance = $balance - $sum+$returns-$comm;
 
-$updates = "UPDATE lender_reg
-            SET updated_balance = $updated_balance
-            WHERE id = '$lender_id'";
+// $updates = "UPDATE lender_reg
+//             SET updated_balance = $updated_balance
+//             WHERE id = '$lender_id'";
 
-if ($conn->query($updates) === TRUE) {
+// if ($conn->query($updates) === TRUE) {
      
-} else {
-    echo "Error updating table: " . $conn->error;
-}
+// } else {
+//     echo "Error updating table: " . $conn->error;
+// }
 
 
-if (isset($_POST['commision_send'])){
-  $lender_id=$_POST['lender_id'];
-  $agent_acc_no = $_POST['agent_account_number'];
-  $unique_code = $_POST['unique_code'];
-  $commision = $_POST['commision'];
-  // $ID = $_POST['customer_id'];
-  echo $commision;
-echo $agent_acc_no;
-echo $unique_code;
-  $statement= $conn->prepare("INSERT into agent_commision (agent_account_number,unique_code,commision,lender_id) VALUES (?,?,?,?)");
-  $statement->bind_param("isdi",$agent_acc_no,$unique_code,$commision,$lender_id);
-  $statement->execute();
-  $statement->close();
-  header("Location: ./index.php");
-  exit();
-}
+// if (isset($_POST['commision_send'])){
+//   $lender_id=$_POST['lender_id'];
+//   $agent_acc_no = $_POST['agent_account_number'];
+//   $unique_code = $_POST['unique_code'];
+//   $commision = $_POST['commision'];
+//   // $ID = $_POST['customer_id'];
+//   echo $commision;
+// echo $agent_acc_no;
+// echo $unique_code;
+//   $statement= $conn->prepare("INSERT into agent_commision (agent_account_number,unique_code,commision,lender_id) VALUES (?,?,?,?)");
+//   $statement->bind_param("isdi",$agent_acc_no,$unique_code,$commision,$lender_id);
+//   $statement->execute();
+//   $statement->close();
+//   header("Location: ./index.php");
+//   exit();
+// }
 ?>
 
  
@@ -312,11 +312,11 @@ echo $unique_code;
 </body>
 </html>
 <?php
-    }
-    else {
-        echo "<script>
-                location.replace('login.php');
-            </script>";
-    }
+    // }
+    // else {
+    //     echo "<script>
+    //             location.replace('login.php');
+    //         </script>";
+    // }
  
  ?>

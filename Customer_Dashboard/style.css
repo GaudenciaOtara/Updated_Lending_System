@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "poppins", sans-serif;
+  }
+  
+  body {
+    min-height: 100vh;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  h1,
+  h2 {
+    color: white;
+  }
+  
+  h3 {
+    color: #0199fe;
+  }
+  
+  .btn {
+    background: #0199fe;
+    color: white;
+    padding: 4px 10px;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    color: red;
+    background: white;
+    padding: 3px 8px;
+    border: 2px solid red;
+  }
+  
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px 10px;
+    border-bottom: 2px solid #0199fe;
+  }
+  
+  table {
+    padding: 10px;
+  }
+  
+  th,
+  td {
+    text-align: left;
+    padding: 15px;
+  }
+  
+  .side-menu {
+    position: fixed;
+    background: #0199fe;
+    width: 20vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .side-menu .brand-name {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .side-menu li {
+    font-size: 24px;
+    padding: 10px 40px;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .side-menu li:hover {
+    background: red;
+    color: white;
+  }
+  
+  .container {
+    position: absolute;
+    right: 0;
+    width: 80vw;
+    height: 100vh;
+    background: url("assets/tech14.jpg");
+    background-size: cover;
+  }
+  
+  .container .header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80vw;
+    height: 10vh;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .container .header .nav {
+    width: 90%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .container .header .nav .search {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .container .header .nav .search input[type="text"] {
+    border: none;
+    background: #f1f1f1;
+    padding: 10px;
+    width: 50%;
+  }
+  
+  .container .header .nav .search button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container .header .nav .search button img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .container .content {
+    position: relative;
+    margin-top: 10vh;
+    min-height: 90hv;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .container .content .cards {
+    width: 250px;
+    height: 100px;
+    background: white;
+    margin: 20px 10px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .container .content .box {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  /* Additional CSS for the modified layout */
+  
+  .container .content .money-returned {
+    margin-top: 20px;
+  }
+  
+  .container .content .money-returned h2 {
+    color: #0199fe;
+  }
+  
+  .container .content .transaction-table {
+    margin-top: 20px;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .container .content .transaction-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .container .content .transaction-table th,
+  .container .content .transaction-table td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .container .content .transaction-table th {
+    background-color: #0199fe;
+    color: white;
+  }
+  
+  .container .content .transaction-table td {
+    border-bottom: 1px solid #0199fe;
+  }
+  
+  .container .content .transaction-table .add-transaction {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .container .content .transaction-table .add-transaction input[type="text"],
+  .container .content .transaction-table .add-transaction input[type="number"] {
+    padding: 5px;
+    width: 150px;
+  }
+  
+  .container .content .transaction-table .add-transaction button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #0199fe;
+    color: white;
+    border: none;
+  }
+  
+  .container .content .transaction-table .add-transaction button:hover {
+    background-color: red;
+    border: none;
+    cursor: pointer;
+  }

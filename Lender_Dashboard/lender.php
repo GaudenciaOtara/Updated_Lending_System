@@ -1,60 +1,113 @@
 <?php
-// session_start();
-// Require '../Functions/connect.php';
-// Require 'checksession.php';
-// // check_session();
-// if (isset($_SESSION['user'])){
+session_start();
+Require '../Functions/connect.php';
+Require 'checksession.php';
+// check_session();
+if (isset($_SESSION['user'])){
     
-// $var_session=$_SESSION["user"];
+$var_session=$_SESSION["user"];
 
-// $user_query = mysqli_query($conn,"select * from lender_reg where email='$var_session'");
-// $user_data = mysqli_fetch_assoc($user_query);
-// $lender_id=$user_data['id'];
-// $lender_transactions = mysqli_query($conn,"select * from lender_transactions where id='$lender_id'");
-// $lender_trans = mysqli_fetch_assoc($lender_transactions);
-// $updated_details = mysqli_query($conn, "SELECT * FROM lender_transactions WHERE lender_id={$user_data['id']}");
-// $updated_commision = mysqli_query($conn, "SELECT * FROM agent_commision WHERE lender_id={$user_data['id']}");
-// $sum = 0;
-// while ($row = mysqli_fetch_assoc($updated_details)) {
-//     $sum += $row['lent_amount'];
-// }
-// $comm = 0;
-// while ($row = mysqli_fetch_assoc($updated_commision)) {
-//     $comm += $row['commision'];
-// }
-// $updated_returns = mysqli_query($conn, "SELECT * FROM agent_returns WHERE lender_id={$user_data['id']}");
-// $returns = 0;
-// while ($rowss= mysqli_fetch_assoc($updated_returns)) {
-//     $returns += $rowss['total_amount'];
-// }
-// $lender_id = $user_data['id'];
+$user_query = mysqli_query($conn,"select * from lender_reg where email='$var_session'");
+$user_data = mysqli_fetch_assoc($user_query);
+$lender_id=$user_data['id'];
+$lender_transactions = mysqli_query($conn,"select * from lender_transactions where id='$lender_id'");
+$lender_trans = mysqli_fetch_assoc($lender_transactions);
+$updated_details = mysqli_query($conn, "SELECT * FROM lender_transactions WHERE lender_id={$user_data['id']}");
+$updated_commision = mysqli_query($conn, "SELECT * FROM agent_commision WHERE lender_id={$user_data['id']}");
+$sum = 0;
+while ($row = mysqli_fetch_assoc($updated_details)) {
+    $sum += $row['lent_amount'];
+}
+$comm = 0;
+while ($row = mysqli_fetch_assoc($updated_commision)) {
+    $comm += $row['commision'];
+}
+$updated_returns = mysqli_query($conn, "SELECT * FROM agent_returns WHERE lender_id={$user_data['id']}");
+$returns = 0;
+while ($rowss= mysqli_fetch_assoc($updated_returns)) {
+    $returns += $rowss['total_amount'];
+}
+$lender_id = $user_data['id'];
 
-// $sql = "SELECT SUM(amount) AS balance
-//         FROM top_up
-//         WHERE lender_id = '$lender_id'";
+$sql = "SELECT SUM(amount) AS balance
+        FROM top_up
+        WHERE lender_id = '$lender_id'";
 
-// $result = $conn->query($sql);
+$result = $conn->query($sql);
 
-// if ($result) {
-//     $row = $result->fetch_assoc();
-//     $balance = $row['balance'];
-// } else {
-//     echo "Error executing query: " . $conn->error;
-// }
+if ($result) {
+    $row = $result->fetch_assoc();
+    $balance = $row['balance'];
+} else {
+    echo "Error executing query: " . $conn->error;
+}
 
-// $updated_balance = $balance - $sum+$returns-$comm;
+$updated_balance = $balance - $sum+$returns-$comm;
 
-// $updates = "UPDATE lender_reg
-//             SET updated_balance = $updated_balance
-//             WHERE id = '$lender_id'";
+$updates = "UPDATE lender_reg
+            SET updated_balance = $updated_balance
+            WHERE id = '$lender_id'";
 
-// if ($conn->query($updates) === TRUE) {
+if ($conn->query($updates) === TRUE) {
      
-// } else {
-//     echo "Error updating table: " . $conn->error;
-// }
+} else {
+    echo "Error updating table: " . $conn->error;
+}
+$query = "SELECT account_number FROM agent_reg";
+$result = mysqli_query($conn, $query);
+function generateUniqueCode($length = 8) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $code = '';
+    
+    $charactersLength = strlen($characters);
+    for ($i = 0; $i < $length; $i++) {
+        $randomIndex = mt_rand(0, $charactersLength - 1);
+        $code .= $characters[$randomIndex];
+    }
+    
+    return $code;
+}
 
+if (isset($_POST['lend'])){
+$uniqueCode = generateUniqueCode(8);
+$agent_number=$_POST['agent_account_number'];
+$account_balance = $_POST['account_balance'];
+$amount_lent = $_POST['lent_amount'];
+$lender_id=$_POST['lender_id'];
 
+$accountExists = false;
+while ($agent = mysqli_fetch_assoc($result)) {
+    if ($agent_number === $agent['account_number']) {
+        $accountExists = true;
+        break;
+    }
+}
+
+if (!$accountExists) {
+    echo "
+    <script>
+    alert('Account Number does not exist');
+    </script>
+    ";
+}
+elseif ($amount_lent > $account_balance) {
+    echo"
+    <script>
+    alert('Insufficient Balance to make this transaction');
+    </script>
+    ";}
+else{
+    $time = date('H:i:s');
+$statement= $conn->prepare("INSERT into lender_transactions (agent_account_number,lent_amount,lender_id,unique_code) VALUES (?,?,?,?)");
+$statement->bind_param("iiis",$agent_number,$amount_lent,$lender_id,$uniqueCode);
+$statement->execute();
+$statement->close();
+$conn->close();
+header("Location: ./lender.php");
+exit();
+     
+}
+}
 // if (isset($_POST['commision_send'])){
 //   $lender_id=$_POST['lender_id'];
 //   $agent_acc_no = $_POST['agent_account_number'];
@@ -98,11 +151,11 @@
             <h1>LENDER</h1>
         </div>
         <ul>
-            <li><img src="./Images/dashboard.png" alt="#" >&nbsp; <span>Dashboard</span></li>
+            <li><a href="lender.php"><img src="./Images/dashboard.png" alt="#" >&nbsp; <span>Dashboard</span></a></li>
             <li><a href="details.php"><img src="./Images/circle-user.png" alt="#" >&nbsp; <span>Details</span> </a></li>
-            <li><img src="./Images/users-alt.png" alt="#" >&nbsp;<span>Agents</span> </li>
-            <li> <img src="./Images/earnings.png" alt="#" > &nbsp;<span>Profit</span></li>
-            <li><img src="./Images/notes-medical.png" alt="#" > &nbsp;<span>Reports</span></li>
+            <li><a href="agentdetails.php"><img src="./Images/users-alt.png" alt="#" >&nbsp;<span>Agents</span></a> </li>
+            <li> <a href="profit.php"><img src="./Images/earnings.png" alt="#" > &nbsp;<span>Profit</span></a></li>
+            <li><a href="reports.php"><img src="./Images/notes-medical.png" alt="#" > &nbsp;<span>Reports</span></a></li>
             <li><a href="settings.php"><img src="./Images/dashboard.png" alt="#" > &nbsp;<span>Settings</span></a></li>
         </ul>
     </div>
@@ -111,17 +164,20 @@
         <div class="header">
             <div class="nav">
                 <div class="search">
-                    
-                    <input type="text" placeholder="Search..">
-                    <button type="submit"><img src="./Images/search.png"alt=""></button>
-                    
+                <img src="./images/dashboard.png" alt="">
+                    <h2>Dashboard</h2>
+                    <!-- <h3>Hi Gaudencia</h3> -->
                     
                 </div>
-                <div class="user">
+                <!-- <div class="user">
                     <a href="#" class="btn">Add New</a>
-                </div>
+                </div> -->
             </div>
         </div>
+<!-- <div class="greeting">
+    <h3>Hi Gaudencia</h3>
+</div> -->
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
 
         <div class="content">
             <div class="cards">
@@ -131,10 +187,10 @@
                     <div class="icon-class">
                         <img src="./Images/sack-dollar.png" alt="">
                     </div>
-
+                      
                     <div class="Balance">
-                        <input type="text" placeholder="<?php echo $user_data['updated_balance'];?>" value="<?php echo $user_data['updated_balance'];?>" readonly>
-                        <h3> Account Balance</h3>
+                        <input type="text" name="account_balance" placeholder="<?php echo $user_data['updated_balance'];?>" value="<?php echo $user_data['updated_balance'];?>" readonly>
+                        <h5> Account Balance</h5>
                         </div>
                        
 
@@ -148,8 +204,8 @@
                     </div>
 
                     <div class="Balance">
-                        <input type="text" placeholder="+254 7...">
-                        <h3> Agent's Mpesa No</h3>
+                        <input type="text" name="agent_account_number" placeholder="+254 7...">
+                        <h5> Agent's Account No</h5>
                         </div>
                        
 
@@ -164,8 +220,10 @@
                     </div>
 
                     <div class="Balance">
-                        <input type="text" placeholder="Ksh. ..">
-                        <h3> Amount to Lend</h3>
+                        <input type="text" name="lent_amount" placeholder="Ksh. ..">
+                        <input type="hidden" name="lender_id" value="<?php echo $user_data['id'];?>">
+
+                        <h5> Amount to Lend</h5>
                         </div>
                     </div>
                     
@@ -177,7 +235,17 @@
                     <button id="topUpButton" data-toggle="modal" data-target="#topUpModal" class="btn">Top Up</button>
                     </div><br>
 
-<!-- TOP UP Bootstrap Modal -->
+
+
+                    <div class="icon-class">
+                       <button type="submit" class="btn" name="lend"> LEND  MONEY</button>
+                       </form>
+                        </div>
+                    </div>
+                    
+                </div>
+             
+                <!-- TOP UP Bootstrap Modal -->
 <div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -205,16 +273,6 @@
     </div>
   </div>
 </div>
-
-                    <div class="icon-class">
-                        <a href="#" class="btn"> LEND  MONEY  </a>
-                       
-                        </div>
-                    </div>
-                    
-                </div>
-               
-                
             </div>
             <div class="content-2">
                 <div class="money-returned">
@@ -224,83 +282,95 @@
                     </div>
                     <table>
                         <tr>
-                            <th>Agent</th>
+                            <th>Agent ID</th>
                             <th>Loan</th>
-                            <th>Profit</th>
-                            <th>Amount Returned</th>
+                            <th>Unique Code</th>
+                            <!-- <th>Amount Returned</th> -->
                             <th>Status</th>
                             <th>Options</th>
                         </tr>
+                        <?php
+        $id_count = 1; 
+ $state = $conn->prepare("SELECT * FROM lender_transactions WHERE lender_id={$user_data['id']}");
+ $state->execute();
+ $res= $state->get_result();
+
+$display_limit = 5;  
+$row_count = 0;       
+
+while ($rows = $res->fetch_assoc()) {
+    $row_count++;
+
+    if ($row_count > $display_limit) {
+        break;   
+    }
+ 
+    ?>
                         <tr>
-                            <td>Jose</td>
-                            <td>22,000.00</td>
-                            <td>1400</td>
-                            <td>23,400.00</td>
+                            <td><?php echo $rows['agent_account_number']; ?></td>
+                            <td><?php echo $rows['lent_amount']; ?></td>
+                            <td><?php echo $rows['unique_code']; ?></td>
+                            <!-- <td>23,400.00</td> -->
                             <td>Approved</td>
                             <td><a href="#" class="btn">View</a></td>
                         </tr>
-                        <tr>
-                            <td>Erick</td>
-                            <td>5,000.00</td>
-                            <td>400</td>
-                            <td>5,400.00</td>
-                            <td>Approved</td>
-                            <td><a href="#" class="btn">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>Pascalia</td>
-                            <td>10,000.00</td>
-                            <td>1,000</td>
-                            <td>11,000.00</td>
-                            <td>Approved</td>
-                            <td><a href="#" class="btn">View</a></td>
-                        </tr>
-                        <var><tr>
-                            <td>Mary</td>
-                            <td>14,000.00</td>
-                            <td>1200</td>
-                            <td>15,200.00</td>
-                            <td>Pending</td>
-                            <td><a href="#" class="btn">View</a></td>
-                        </tr></var>
+                      
+                        <?php
+
+             $id_count++; 
+             }
+             ?>
+                        
                     </table>
                 </div>
                 <div class="profit">
                     <div class="title">
                         <h2> Agents Details</h2>
-                        <a href="#" class="btn">View All </a>
+                        <a href="./agentdetails.php" class="btn">View All </a>
                     </div>
+                    <!-- <div class="report">
+                        <h6>Generate Report</h6>
+                   <a href=""> <button>GENERATE  </button></a>
+                        
+                    </div> -->
                     <table>
-                        <tr>
+                    <tr>
+                        <th>ID</th>
                         <th>Profile</th>
                         <th>Name</th>
-                        <th>M-Pesa No.</th>
-                        <th>Report</th>
+                        <th>Account No.</th>
                     </tr>
-                    <tr>
-                        <td><img src="./Images/user.png" alt=""></td>
-                        <td>Jose</td>
-                        <td>+245 7..</td>
-                        <td><a href="#" class="btn"> GENERATE</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="./Images/user.png" alt=""></td>
-                        <td>Erick</td>
-                        <td>+245 7..</td>
-                        <td><a href="#" class="btn"> GENERATE</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="./Images/user.png" alt=""></td>
-                        <td>Pascalia</td>
-                        <td>+245 7..</td>
-                        <td><a href="#" class="btn"> GENERATE</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="./Images/user.png" alt=""></td>
-                        <td>Mary</td>
-                        <td>+245 7..</td>
-                        <td><a href="#" class="btn"> GENERATE</a></td>
-                    </tr>
+                    <?php
+        $id_count = 1; 
+ $stmt = $conn->prepare("SELECT * from agent_reg");
+ $stmt->execute();
+ $result = $stmt->get_result();
+
+$display_limit = 5;  
+$row_count = 0;       
+
+while ($row = $result->fetch_assoc()) {
+    $row_count++;
+
+    if ($row_count > $display_limit) {
+        break;   
+    }
+ 
+    ?>
+    <tr>
+        <td><?php echo $id_count; ?></td>
+        <td><img src="./Images/user.png" alt=""></td>
+        <td><?php echo $row['username']; ?></td>
+        <td><?php echo $row['account_number']; ?></td>
+    </tr>
+    <?php
+
+    $id_count++; 
+}
+?>
+
+                    
+                    
                     </table>
                 </div>
                 </div>
@@ -312,11 +382,11 @@
 </body>
 </html>
 <?php
-    // }
-    // else {
-    //     echo "<script>
-    //             location.replace('login.php');
-    //         </script>";
-    // }
+    }
+    else {
+        echo "<script>
+                location.replace('login.php');
+            </script>";
+    }
  
  ?>

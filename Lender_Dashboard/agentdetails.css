@@ -1,0 +1,118 @@
+body{
+    /* margin-bottom: 15%; */
+}
+ 
+.search{
+    display: flex;
+}
+.search h2{
+    margin-left: 3%;
+    width: 30vw;
+}
+.agent-search{
+    display: flex;
+    margin-top: 3%;
+    margin-left: 3%;
+}
+.agent-search input{
+    width: 20vw;
+    height: 7vh;
+    padding: 2%;
+}
+.agent-search input:focus{
+    border: 1px solid #0199fe;
+    color: #0199fe;
+    outline: 0;
+    padding: 2.1%;
+}
+.agent-search button{
+    height: 3.2vw;
+    width: 5vw;
+    border: 1px solid #0199fe;
+    background-color: #0199fe;
+    color: white;
+    margin-left: 0.7px;
+}
+table thead td{
+    width: 18vw;
+    border: 1px solid #0199fe;
+    font-weight: bolder;
+}
+table{
+    border: 1px solid #0199fe;
+    margin-top: 3%;
+    color: #0199fe;
+    margin-left: 3%;
+}
+table tr td{
+    border: 1px solid #0199fe;
+}
+.agent-display{
+    margin-left: 4%;
+    display: flex;
+    color: #0199fe;
+}
+.agent-display input{
+    height: 7vh;
+    padding: 1%;
+    border: 1px solid #0199fe;
+    color: #0199fe;
+}
+.profile-details{
+    border: 1px solid #0199fe;
+    height: 60vh;
+    margin-left: 3%;
+    width: 30vw;
+    margin-top: 3%;
+    box-shadow: 2px 0px 1px 2px#0199fe;
+    padding: 4%;
+}
+.profile-details input{
+    margin-left: 4%;
+    margin-top: 2%;
+    width: 20vw;
+    height: 6vh;
+    padding: 1%;
+    border:1px solid #0199fe;
+    color: #0199fe;
+    font-weight: 300;
+
+}
+.profile-details button{
+    border:3px solid #0199fe;
+    background-color: #0199fe;
+    height: 8vh;
+    color: white;
+    margin-top: 4%;
+    margin-left: 30%;
+    padding: 1%;
+}
+.profile-details button:hover{
+    color: black;
+}
+.profile-details input:focus{
+    outline: 0;
+}
+table button{
+    height: 6vh;
+    width: 10vw;
+    border: 1px solid #0199fe;
+    background-color: #0199fe;
+    color: white;
+}
+.data-options a{
+    /* color: #0199fe; */
+    text-decoration: none;
+}
+.data-options button{
+    height: 6vh;
+    width: 14vw;
+    border: 1px solid #0199fe;
+    background-color: #0199fe;
+    color: white;
+}
+#delete{
+    background-color: red;
+    border: 1px solid red;
+}
+ 

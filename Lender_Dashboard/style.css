@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     font-family: "poppins" , sans-serif;
 }
 body{
@@ -79,48 +79,49 @@ th,td{
     right: 0;
     width: 80vw;
     height: 100vh;
-    background: image( "assets/tech14.jpg");
+    background: image( "./Images/tech14.jpg");
 }
 .container .header{
-    position: fixed;
+ 
     top: 0;
     right: 0;
-    width: 80vw;
-    height: 10vh;
+    width: 78.8vw;
+    height: 13vh;
     background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* background-color: #0199fe; */
+    /* display: flex; */
     box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);
 }
 .container .header .nav{
-    width: 90%;
+    width: 60%;
     display: flex;
     align-items: center;
 
 }
 .container .header .nav .search{
-    flex: 3;
-    display: flex;
+    /* flex: 3; */
     justify-content: center;
 
 }
 
 .container .header .nav .search input[type=text]{
+    margin-top: 1%;
+    margin-left: 3%;
     border: none;
     background: #f1f1f1;
     padding: 10px;
     width: 50%;
-
+    border:1px solid #0199fe;
+}
+.search input:focus{
+    border: 1px solid#0199fe;
 }
 .container .header .nav .search button{
     width: 40px;
     height: 40px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    /* position: absolute;
+    left: 25%;
+    top: 5%; */
 }
 .container .header .nav .search button img{
     width: 30px;
@@ -128,26 +129,24 @@ th,td{
 }
 .container .content{
     position: relative;
-    margin-top: 10vh;
+    /* margin-top: 10vh; */
     min-height: 90hv;
-
+    margin-top: 1%;
 }
 .container .content .cards{
     padding: 20px 15px;
     display: flex;
     align-items: center;
-    justify-content:space-between;
-    flex-wrap: wrap;
 }
 .container .content .cards .cards{
     width: 250px;
-    height: 150px;
+    height: 30vh;
     background: white;
     margin: 20px 10px;
-    justify-content: center;
     display: flex;
     align-items: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 2%;
 }
 
 .container .content .cards .cards .btn:hover{
@@ -159,6 +158,8 @@ th,td{
     background: #f1f1f1;
     padding: 10px;
     width: 100%;
+    /* height: 8vh;
+    margin-top: 3%; */
 
 
 }
@@ -241,3 +242,84 @@ th,td{
     text-decoration: none;
     color: white;
  }
+ .cards input{
+   height: 6.5vh;
+   margin-top: 2%;
+ }
+.Balance h5{
+    color: #0199fe;
+    margin-top: 2.5%;
+}
+.Balance input{
+    margin-top: 3%;
+}
+.Balance input:focus{
+    outline: 0;
+    /* border: 1px solid#0199fe; */
+}
+.icon-class-1 .btn{
+    width: 15vw;
+    height: 8vh;
+    text-align: center;
+}
+.icon-class .btn{
+    text-align: center;
+    /* padding-top: 2%; */
+    width: 15vw;
+    height: 8vh; 
+}
+.report{
+    display: flex;
+    margin-top: 2%;
+    /* justify-content: center; */
+}
+.report a{
+    text-decoration: none;
+}
+.report button{
+    margin-top: 2%;
+    margin-left: 15%;
+    border:1px solid #0199fe;
+    background-color: #0199fe;
+    color: white;
+    height: 8vh;
+    width: 13vw;
+}
+.report h6{
+    margin-left: 3%;
+    margin-top: 6%;
+}
+.greeting h3{
+    margin-left: 4%;
+    color: #0199fe;
+    margin-top: 3%;
+    margin-bottom: 1%;
+}
+.side-menu li{
+    margin-top: 2%;
+    font-size: 21px;
+}
+.side-menu a{
+    text-decoration: none;
+}
+.nav .search{
+     display: flex;
+}
+.search img{
+     margin-left: 3%;
+     /* width: 10px; */
+     width:3vw;
+     height: 7vh;
+     margin-top: 3%;
+     /* color: #0199fe; */
+}
+.search h2{
+    margin-left: 3%;
+    width: 15vw;
+    margin-top: 4%;
+    font-weight: bolder;
+}
+footer{
+    background-color: #0199fe;
+    height: 10vh;
+}

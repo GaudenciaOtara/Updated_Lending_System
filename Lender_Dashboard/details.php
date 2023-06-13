@@ -61,6 +61,12 @@ if (isset($_POST['update'])){
 <link rel="stylesheet" href="agentdetails.css">
 
     <title>Lender Panel</title>
+    <style>
+    body{
+    background: url(./images/money-person.jpg);
+    background-size: cover;
+}
+</style>
 </head>
 <body>
     

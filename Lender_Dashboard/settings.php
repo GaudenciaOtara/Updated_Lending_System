@@ -33,7 +33,12 @@ $user_data = mysqli_fetch_assoc($user_query);
 
     <title>Lender Panel</title>
     <link id="theme-style" rel="stylesheet" href="default.css">
-
+<style>
+    body{
+    background: url(./images/money-person.jpg);
+    background-size: cover;
+}
+</style>
 <style>
    
 </style>
@@ -160,6 +165,7 @@ $user_data = mysqli_fetch_assoc($user_query);
       <button class="btn-danger" id="delete"> <a href="delete-account.php">Delete Account</a></button> 
       <button> <a href="data-sharing.php">Manage Data Sharing</a></button> 
     </div>
+    <button class="btn-danger logout" id="delete"> <a href="logout.php"> LOG OUT </a></button>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>

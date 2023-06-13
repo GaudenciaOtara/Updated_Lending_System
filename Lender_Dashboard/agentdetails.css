@@ -38,6 +38,7 @@ table thead td{
     border: 1px solid #0199fe;
     font-weight: bolder;
 }
+ 
 table{
     border: 1px solid #0199fe;
     margin-top: 3%;
@@ -115,4 +116,40 @@ table button{
     background-color: red;
     border: 1px solid red;
 }
- 
+.logout{
+    height: 6vh;
+    width: 14vw;
+    border: 1px solid #0199fe;
+    background-color: #0199fe;
+    color: white;
+}
+.generate-report button{
+    background-color: #0199fe;
+    margin-top: 3%;
+    color: white;
+    height: 6vh;
+    width: 15vw;
+    border: 1px solid #0199fe;
+    margin-left: 5%;
+}
+.generate-report button:hover{
+    background-color: blue;
+}
+#table2 button{
+    background-color: #0199fe;
+    margin-top: 3%;
+    color: white;
+    height: 6vh;
+    width: 15vw;
+    border: 1px solid #0199fe;
+    margin-left: 5%;
+}
+#table1 button{
+    background-color: #0199fe;
+    margin-top: 3%;
+    color: white;
+    height: 6vh;
+    width: 15vw;
+    border: 1px solid #0199fe;
+    margin-left: 5%;
+}

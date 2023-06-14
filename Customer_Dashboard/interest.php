@@ -6,11 +6,11 @@ include 'checksession.php';
 if (isset($_SESSION['user'])){
     
 $var_session=$_SESSION["user"];
-
 $user_query = mysqli_query($conn,"select * from customer_reg where email='$var_session'");
 $user_data = mysqli_fetch_assoc($user_query);
 $phoneNumber=$user_data['phonenumber'];
 $cus_ID=$user_data['id'];
+$id=$user_data['id'];
 
 
 $agent_transactions = mysqli_query($conn,"select * from customer_money where customer_number='$phoneNumber'");
@@ -112,7 +112,7 @@ if (isset($_POST['send'])){
 
             </li>
             
-           
+         
             <li>
                 <a href="settings.php">
                     <img src="../Agent_Dashboard/assets/settings.png" alt="#" width="37px">
@@ -144,139 +144,39 @@ if (isset($_POST['send'])){
      <div class="dashboard" style="margin-left:21%;margin-top:0; margin-bottom:2%; font-weight:bold;";>
         <a href="customer.php">Dashboard</a>
      </div>
-    <div class="display-commision">
-        <div class="commision-box">
-        <img src="assets/sack-dollar.png" alt=""><br>
-        <input type="text" value="<?php echo $remainingTotal;?>" readonly>
-        <p>My Balance</p>
-    </div>
-        <div class="withdraw">
-            <button>Withdraw Money</button>
-        </div>
-        <div class="send-back">
-        <button type="button" id="topUpButton" data-toggle="modal" data-target="#topUpModal">Top Up</button>
-
-        </div>
-    </div>
- 
-        </div>
-         
-
-<!-- TOP UP Bootstrap Modal -->
-<div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="topUpModalLabel">Top Up</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form id="topUpForm" action="./process_topup.php" method="POST">
-          <div class="form-group">
-            <label for="amount">Amount:</label>
-            <input type="text" class="form-control" id="amount" name="amount" required>
-          </div>
-          <div class="form-group">
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" required>
-          </div>
-           
-            <input type="hidden" class="form-control" id="lender_id" name="customer_id" value="<?php echo $user_data['id'];?>" required>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
- 
-        <div class="content-2">
-            <div class="money-returned">
-                <div class="title">
-                    <h4>Loans Summary</h4>
-                    <hr style="margin-bottom:1.5%;";>
-                    <a href="agent.php" style="padding-top:2%;";>View All</a>
-                </div>
-                <div class="table">
-                    <table>
-            
-                    <tr>
-                        <th>ID</th>
-                        <th>Agent ID</th>
-                        <th>Amount Lent</th>
-                        <th>Total Amount(+Interest) </th>
-                        <th>Time Allocated</th>
-                        <th>Unique Code</th>
-                    </tr>
-                    <?php
+     <div class="table" style="margin-top:3%;">
+    <h2 style="margin-left:15%; text-align:center;";>Money Returned Reports</h2>
+    <hr>
+    <table>
+        <thead class="head">
+            <tr>
+                <td>ID</td>
+                <td>Unique Code</td>
+                <td>Amount Sent</td>
+                <td>Interest</td>
+                <td>Agent ID</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
             $id_count = 0;
             // $account_no=$user_data['account_number'];
-            $stmt = $conn->prepare("SELECT * from customer_money where customer_number='$phoneNumber'");
+            $stmt = $conn->prepare("SELECT * from customer_returns where customer_id='$id'");
             $stmt->execute();
             $result = $stmt->get_result();
-            $display_limit = 6;  
-            $row_count = 0;  
             while ($row = $result->fetch_assoc()) {
-                $row_count++;
-
-                if ($row_count > $display_limit) {
-                    break;   
-                }
-             
             ?>
-                  
-                    
-                <tr>
-                <tr>
+            <tr>
                 <td><?php echo $id_count; ?></td>
-                <td><?php echo $row['agent_id']; ?></td>
-                <td><?php echo $row['amount_lent']; ?></td>
-                <td><?php echo $row['total_amount']; ?></td>
-                <td><?php echo $row['time_allocated']; ?></td>
-
                 <td><?php echo $row['unique_code']; ?></td>
-
+                <td><?php echo $row['amount_sent']; ?></td>
+                <td><?php echo $row['expected_interest']; ?></td>
+                <td><?php echo $row['agent_id']; ?></td>
             </tr>
-                </tr>
             <?php $id_count = $id_count + 1 ;} ?>
-
-                </table>
-                </div>
-                    
-                <!-- </table> -->
-              
-           <!-- Modal Updating Javascript -->
-<script>
-  function fetchData(selectedValue) {
-    $.ajax({
-      url: 'fetch_data.php',
-      method: 'POST',
-      data: { selectedValue: selectedValue },
-      success: function(response) {
-        document.getElementById('input1').value = response.uniqueCode;
-        document.getElementById('input2').value = response.lenderID;
-        document.getElementById('input3').value = response.agentAccountNumber;
-        document.getElementById('input4').value = response.totalAmountSent;
-        document.getElementById('input5').value = calculateExpectedCommission(response.totalAmountSent);
-      },
-      error: function() {
-        // Handle errors if any
-      }
-    });
-  }
-
-  function calculateExpectedCommission(totalAmount) {
-    // Calculate 3% of the total amount
-    var commission = totalAmount * 0.03;
-    return commission.toFixed(2); // Round to 2 decimal places if needed
-  }
-</script>
-<!-- End of Modal Updating Javascript --> 
-        
- 
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

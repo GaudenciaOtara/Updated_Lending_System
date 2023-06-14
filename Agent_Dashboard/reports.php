@@ -107,7 +107,7 @@ if (isset($_POST['return'])){
             
             <li>
                 <a href="lender.php">
-                    <img src="assets/user.png" alt="#">
+                <img src="../Customer_Dashboard/assets/agents.png" alt="#" width="40px">
                     <span>Lender</span>
                 </a>
 

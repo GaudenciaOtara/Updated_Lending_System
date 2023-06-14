@@ -62,10 +62,10 @@ if (isset($_POST['update'])){
 
     <title>Lender Panel</title>
     <style>
-    body{
+    /* body{
     background: url(./images/money-person.jpg);
     background-size: cover;
-}
+} */
 </style>
 </head>
 <body>

@@ -80,8 +80,9 @@ if (isset($_SESSION['user'])){
 
         <div id="table1" style="display: none;">
         
-        <button type="submit" name="submit" ><a href="./report.php" style="padding-top: 30px;">Generate Report</a></button>
+        <button type="submit" name="submit" ><a href="./moneyreturnedreport.php" style="padding-top: 30px;">Generate Report</a></button>
         <table>
+            
         <thead>
             <tr>
                 <td>ID</td>

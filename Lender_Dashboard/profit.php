@@ -6,9 +6,31 @@ Require 'checksession.php';
 if (isset($_SESSION['user'])){
 $var_session=$_SESSION["user"];
 
+
 $user_query = mysqli_query($conn,"select * from lender_reg where email='$var_session'");
 $user_data = mysqli_fetch_assoc($user_query);
+$lender_id=$user_data['id'];
+
  
+
+
+if (isset($_POST['commision_send'])){
+  $lender_id=$_POST['lender_id'];
+  $agent_acc_no = $_POST['agent_account_number'];
+  $unique_code = $_POST['unique_code'];
+  $commision = $_POST['commision'];
+  // $ID = $_POST['customer_id'];
+  echo $commision;
+echo $agent_acc_no;
+echo $unique_code;
+  $statement= $conn->prepare("INSERT into agent_commision (agent_account_number,unique_code,commision,lender_id) VALUES (?,?,?,?)");
+  $statement->bind_param("isdi",$agent_acc_no,$unique_code,$commision,$lender_id);
+  $statement->execute();
+  $statement->close();
+  header("Location: ./index.php");
+  exit();
+}
+
 
 ?>
 
@@ -62,7 +84,10 @@ $user_data = mysqli_fetch_assoc($user_query);
                 
             </div>
         </div>
-     
+     <div class="send-commision">
+     <button id="commissionButton" class="bottom" data-toggle="modal" data-target="#commissionModal"
+     >Send Commision</button>
+     </div>
         <table>
         <thead>
             <td>ID</td>
@@ -112,6 +137,60 @@ $id_count++;
     </div>
 </div>
 
+<!-- SEND COMMISION Modal -->
+<div class="modal fade" id="commissionModal" tabindex="-1" role="dialog" aria-labelledby="commissionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commissionModalLabel">Commission Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+          <div class="form-group">
+            <label for="name">Account Number</label>
+            <input type="number" class="form-control" id="name" name="agent_account_number" placeholder="Enter Value">
+          </div>
+          <div class="form-group">
+            <label for="Commision">Expected Commision</label>
+            <input type="text" class="form-control" id="email" name="commision" placeholder="Enter your Value">
+          </div>
+          <div class="form-group">
+            <label for="subject">Unique Code</label>
+            <input type="text" class="form-control" id="subject" name="unique_code" placeholder="Enter Value">
+            <input type="hidden" class="form-control" value="<?php echo $user_data['id'];?>" name="lender_id">
+
+          </div>
+          <div class="form-group">
+            <label for="selectOption">Options</label>
+            <select class="form-control" id="selectOption">
+    <option value="">Select Transaction Code</option> 
+            <?php
+        $state = $conn->prepare("SELECT * FROM agent_returns where lender_id='$lender_id' ");
+        $state->execute();
+        $res = $state->get_result();
+        while ($rows = $res->fetch_assoc()) {
+          echo '<option value="' . $rows['unique_code'] . '">' . $rows['unique_code'] . '</option>';
+        }
+        ?>
+            </select>
+          </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" name="commision_send">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ 
+
 <script>
     var viewButtons = document.getElementsByClassName("view-button");
     for (var i = 0; i < viewButtons.length; i++) {
@@ -128,6 +207,29 @@ $id_count++;
             xhttp.send();
         });
     }
+
+
+
+    function getCustomerDetails() {
+    var selectedUniqueCode = document.getElementById("selectOption").value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "fetch_commision.php?unique_code=" + selectedUniqueCode, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        // Parse the JSON response
+        var response = JSON.parse(xhr.responseText);
+
+        // Update the input fields with the customer details
+        document.getElementById("name").value = response.agent_account_number;
+        document.getElementById("email").value = response.commision;
+        document.getElementById("subject").value = response.unique_code;
+      }
+    };
+    xhr.send();
+  }
+
+  document.getElementById("selectOption").addEventListener("change", getCustomerDetails);
 </script>
 
     </table> 

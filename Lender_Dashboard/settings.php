@@ -39,9 +39,7 @@ $user_data = mysqli_fetch_assoc($user_query);
     background-size: cover;
 }
 </style>
-<style>
-   
-</style>
+ 
 
 <!-- Rest of your HTML code -->
 

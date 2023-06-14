@@ -108,22 +108,7 @@ exit();
      
 }
 }
-// if (isset($_POST['commision_send'])){
-//   $lender_id=$_POST['lender_id'];
-//   $agent_acc_no = $_POST['agent_account_number'];
-//   $unique_code = $_POST['unique_code'];
-//   $commision = $_POST['commision'];
-//   // $ID = $_POST['customer_id'];
-//   echo $commision;
-// echo $agent_acc_no;
-// echo $unique_code;
-//   $statement= $conn->prepare("INSERT into agent_commision (agent_account_number,unique_code,commision,lender_id) VALUES (?,?,?,?)");
-//   $statement->bind_param("isdi",$agent_acc_no,$unique_code,$commision,$lender_id);
-//   $statement->execute();
-//   $statement->close();
-//   header("Location: ./index.php");
-//   exit();
-// }
+
 ?>
 
  
@@ -165,14 +150,17 @@ exit();
             <div class="nav">
                 <div class="search">
                 <img src="./images/dashboard.png" alt="">
-                    <h2>Dashboard</h2>
-                    <!-- <h3>Hi Gaudencia</h3> -->
+                    <h2>Dashboard</h2><br>
                     
                 </div>
+     
+
                 <!-- <div class="user">
                     <a href="#" class="btn">Add New</a>
                 </div> -->
             </div>
+            <h4 class="hello" style=" width:40vw; margin-left: 80%;
+  margin-bottom:3%; padding-bottom:3%;";>Hi <?php echo $user_data['username'];?></h4>
         </div>
 <!-- <div class="greeting">
     <h3>Hi Gaudencia</h3>
@@ -278,7 +266,7 @@ exit();
                 <div class="money-returned">
                     <div class="title">
                         <h2> Transactions</h2>
-                        <a href="#" class="btn">View All </a>
+                        <a href="profit.php" class="btn">View All </a>
                     </div>
                     <table>
                         <tr>
@@ -312,7 +300,7 @@ while ($rows = $res->fetch_assoc()) {
                             <td><?php echo $rows['unique_code']; ?></td>
                             <!-- <td>23,400.00</td> -->
                             <td>Approved</td>
-                            <td><a href="#" class="btn">View</a></td>
+                            <td><a href="profit.php" class="btn">View</a></td>
                         </tr>
                       
                         <?php

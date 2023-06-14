@@ -5,6 +5,10 @@ body{
 .search{
     display: flex;
 }
+.hello{
+    margin-left: 40%;
+    color: #0199fe;
+}
 .search h2{
     margin-left: 3%;
     width: 30vw;
@@ -152,4 +156,13 @@ table button{
     width: 15vw;
     border: 1px solid #0199fe;
     margin-left: 5%;
+}
+.send-commision button{
+    margin-left: 3%;
+    height: 7vh;
+    background-color: #0199fe;
+    margin-top: 3%;
+    border: 1px solid #0199fe;
+    color: white;
+    width: 15vw;
 }

@@ -90,7 +90,7 @@ echo "
                         <div class="select">
                         <select type="user_type" onchange="location=this.value;">
                             <option value="Lender">Lender</option>
-                            <option value="../Agent_Dashboard/agentsignup.php">Agent</option>
+                            <option value="../Agent_Dashboard/signup.php">Agent</option>
                             <option value="../Customer_Dashboard/customersignup.php">Customer</option>
                         </select>   
                     

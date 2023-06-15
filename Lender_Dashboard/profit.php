@@ -27,7 +27,7 @@ echo $unique_code;
   $statement->bind_param("isdi",$agent_acc_no,$unique_code,$commision,$lender_id);
   $statement->execute();
   $statement->close();
-  header("Location: ./index.php");
+  header("Location: ./profit.php");
   exit();
 }
 
@@ -87,7 +87,13 @@ echo $unique_code;
      <div class="send-commision">
      <button id="commissionButton" class="bottom" data-toggle="modal" data-target="#commissionModal"
      >Send Commision</button>
+     <button id="topUpButton" data-toggle="modal" data-target="#topUpModal" class="btn" style="margin-left:10%; border-radius:0; margin-top:0;";>Top Up</button>
+
      </div>
+     <div class="icon-class-1" >
+                    
+                    </div>
+
         <table>
         <thead>
             <td>ID</td>
@@ -189,6 +195,36 @@ $id_count++;
 </div>
 
 
+
+
+                           <!-- TOP UP Bootstrap Modal -->
+                           <div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="topUpModalLabel">Top Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id="topUpForm" action="../PAYMENT/process_topup.php" method="POST">
+          <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="text" class="form-control" id="amount" name="amount" required>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" required>
+          </div>
+           
+            <input type="hidden" class="form-control" id="lender_id" name="lender_id" value="<?php echo $user_data['id'];?>" required>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>  
  
 
 <script>

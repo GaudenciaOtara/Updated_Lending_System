@@ -159,7 +159,7 @@ exit();
                     <a href="#" class="btn">Add New</a>
                 </div> -->
             </div>
-            <h4 class="hello" style=" width:40vw; margin-left: 80%;
+            <h4 class="hello" style=" margin-left: 3%;
   margin-bottom:3%; padding-bottom:3%;";>Hi <?php echo $user_data['username'];?></h4>
         </div>
 <!-- <div class="greeting">
@@ -177,7 +177,7 @@ exit();
                     </div>
                       
                     <div class="Balance">
-                        <input type="text" name="account_balance" placeholder="<?php echo $user_data['updated_balance'];?>" value="<?php echo $user_data['updated_balance'];?>" readonly>
+                        <input type="text" name="account_balance" required placeholder="<?php echo $user_data['updated_balance'];?>" value="<?php echo $user_data['updated_balance'];?>" readonly>
                         <h5> Account Balance</h5>
                         </div>
                        
@@ -192,7 +192,7 @@ exit();
                     </div>
 
                     <div class="Balance">
-                        <input type="text" name="agent_account_number" placeholder="+254 7...">
+                        <input type="text"  required name="agent_account_number" placeholder="+254 7...">
                         <h5> Agent's Account No</h5>
                         </div>
                        
@@ -218,50 +218,32 @@ exit();
                 </div>
                 <div class="cards">
                     <div class="box">
-
-                    <div class="icon-class-1">
-                    <button id="topUpButton" data-toggle="modal" data-target="#topUpModal" class="btn">Top Up</button>
-                    </div><br>
-
-
-
                     <div class="icon-class">
                        <button type="submit" class="btn" name="lend"> LEND  MONEY</button>
                        </form>
                         </div>
+                   <br>
+
+
+
+
+
+
+
+                   <div class="icon-class-1">
+                    <button id="topUpButton" data-toggle="modal" data-target="#topUpModal" class="btn">Withdraw</button>
+                    
+                    </div>
+
+
+                   
                     </div>
                     
                 </div>
-             
-                <!-- TOP UP Bootstrap Modal -->
-<div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="topUpModalLabel">Top Up</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form id="topUpForm" action="../PAYMENT/process_topup.php" method="POST">
-          <div class="form-group">
-            <label for="amount">Amount:</label>
-            <input type="text" class="form-control" id="amount" name="amount" required>
-          </div>
-          <div class="form-group">
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" required>
-          </div>
-           
-            <input type="hidden" class="form-control" id="lender_id" name="lender_id" value="<?php echo $user_data['id'];?>" required>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+
             </div>
+
+
             <div class="content-2">
                 <div class="money-returned">
                     <div class="title">
@@ -367,6 +349,9 @@ while ($row = $result->fetch_assoc()) {
           
     </div>
     
+
+
+ 
 </body>
 </html>
 <?php

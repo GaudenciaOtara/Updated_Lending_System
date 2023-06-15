@@ -35,7 +35,7 @@ if (isset($_POST['return'])){
   $statement->bind_param("siidd",$unique_code,$lender_id,$agent_acc_no,$amount_sent,$commision);
   $statement->execute();
   $statement->close();
-  header("Location: ./lendermoney.php");
+  header("Location: ./agent.php");
   exit();
 }
 ?>

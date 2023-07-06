@@ -49,9 +49,9 @@ else{
   $updateQuery = "UPDATE lender_transactions SET lent_amount = $updated_balance WHERE unique_code = '$unique_code'";
   mysqli_query($conn, $updateQuery);
 
-    $time = date('H:i:s');
-    $statement= $conn->prepare("INSERT into customer_money (customer_number,amount_lent,unique_code,expected_interest,total_amount,agent_id,time_allocated) VALUES (?,?,?,?,?,?,?)");
-    $statement->bind_param("idsddis",$customer_number,$amount_lent,$unique_code,$expected_interest,$total_amount,$agent_id,$time);
+    // $time = date('H:i:s');
+    $statement= $conn->prepare("INSERT into customer_money (customer_number,amount_lent,unique_code,expected_interest,total_amount,agent_id) VALUES (?,?,?,?,?,?)");
+    $statement->bind_param("idsddi",$customer_number,$amount_lent,$unique_code,$expected_interest,$total_amount,$agent_id);
     $statement->execute();
     $statement->close();
     $state= $conn->prepare("INSERT into updated_values (agent_id,updated_balance,unique_code,expected_interest,total_amount) VALUES (?,?,?,?,?)");

@@ -70,6 +70,8 @@ echo $unique_code;
             <li><a href="reports.php"><img src="./Images/notes-medical.png" alt="#" > &nbsp;<span>Reports</span></a></li>
             <li><a href="settings.php"><img src="./Images/dashboard.png" alt="#" > &nbsp;<span>Settings</span></a></li>
         </ul>
+        <button class="menu-toggle-button">&#9776;</button>
+
     </div>
     <div class="container">
       
@@ -85,9 +87,9 @@ echo $unique_code;
             </div>
         </div>
      <div class="send-commision">
-     <button id="commissionButton" class="bottom" data-toggle="modal" data-target="#commissionModal"
-     >Send Commision</button>
-     <button id="topUpButton" data-toggle="modal" data-target="#topUpModal" class="btn" style="margin-left:10%; border-radius:0; margin-top:0;";>Top Up</button>
+     <!-- <button id="commissionButton" class="bottom" data-toggle="modal" data-target="#commissionModal"
+     >Send Commision</button> -->
+     <button id="topUpButton" data-toggle="modal" data-target="#topUpModal" class="btn" style="margin-left:2%; border-radius:0; margin: top 10px;;";>Top Up</button>
 
      </div>
      <div class="icon-class-1" >
@@ -96,10 +98,10 @@ echo $unique_code;
 
         <table>
         <thead>
-            <td>ID</td>
+            <td class="hide-on-small">ID</td>
             <td>Lent Amount</td>
             <td>Unique Code</td>
-            <td>Time Allocated</td>
+            <td class="hide-on-small">Time Allocated</td>
             <td>Profit Returned</td>
         </thead>
         <?php
@@ -113,10 +115,10 @@ echo $unique_code;
 while ($rows = $res->fetch_assoc()) {
     ?>
         <tr>
-            <td><?php echo $id_count; ?></td>
+            <td class="hide-on-small"><?php echo $id_count; ?></td>
             <td><?php echo $rows['lent_amount']; ?></td>
             <td><?php echo $rows['unique_code']; ?></td>
-            <td><?php echo $rows['time_allocated']; ?></td>
+            <td class="hide-on-small"><?php echo $rows['time_allocated']; ?></td>
            <td> <button class="view-button btn btn-primary" data-toggle="modal" data-target="#detailsModal" data-unique-code="<?php echo $rows['unique_code']; ?>">View</button></td>
 
         </tr>
@@ -144,7 +146,7 @@ $id_count++;
 </div>
 
 <!-- SEND COMMISION Modal -->
-<div class="modal fade" id="commissionModal" tabindex="-1" role="dialog" aria-labelledby="commissionModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="commissionModal" tabindex="-1" role="dialog" aria-labelledby="commissionModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -192,13 +194,13 @@ $id_count++;
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 
 
                            <!-- TOP UP Bootstrap Modal -->
-                           <div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
+<div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -226,7 +228,7 @@ $id_count++;
   </div>
 </div>  
  
-
+<script src="toggle.js"></script>
 <script>
     var viewButtons = document.getElementsByClassName("view-button");
     for (var i = 0; i < viewButtons.length; i++) {

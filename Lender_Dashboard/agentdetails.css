@@ -164,5 +164,99 @@ table button{
     margin-top: 3%;
     border: 1px solid #0199fe;
     color: white;
-    width: 15vw;
+    width: 19vw;
 }
+@media screen and (max-width: 768px) {
+    .data-options{
+        display: block;
+    }
+    .data-options button{
+        height: 10vh;
+        width: 30vw;
+        flex-direction: column;
+        margin-top: 3%;
+    }
+   #delete{
+    height: 8vh;
+    width: 25vw;
+   }
+   .agent-display{
+    margin-left: 4%;
+    display: flex;
+    color: #0199fe;
+}
+.agent-display input{
+    height: 7vh;
+    padding: 1%;
+    border: 1px solid #0199fe;
+    color: #0199fe;
+}
+.profile-details{
+    border: 1px solid #0199fe;
+    height: 60vh;
+    margin-left: 3%;
+    width: 90vw;
+    margin-top: 3%;
+    box-shadow: 2px 0px 1px 2px#0199fe;
+    padding: 4%;
+}
+.profile-details input{
+    margin-left: 11%;
+    margin-top: 2%;
+    width: 60vw;
+    height: 6.5vh;
+    padding: 1%;
+    border:1px solid #0199fe;
+    color: #0199fe;
+    font-weight: 300;
+
+}
+.profile-details button{
+    border:3px solid #0199fe;
+    background-color: #0199fe;
+    height: 8vh;
+    color: white;
+    margin-top: 4%;
+    margin-left: 30%;
+    padding: 1%;
+}
+.agent-search input{
+    width: 70vw;
+ }
+ .agent-search button{
+    height: 10vw;
+    width: 20vw;
+   
+}
+.agent-display{
+    display: block;
+}
+.send-commision button{
+    width: 50vw;
+}
+.hide-on-small {
+    display: none;
+  }
+ td .view-button{
+    width: 20vw;
+ }
+ .generate-report button{
+    background-color: #0199fe;
+    margin-top: 3%;
+    color: white;
+    height: 9vh;
+    width: 38vw;
+    border: 1px solid #0199fe;
+    margin-left: 5%;
+}
+ 
+#table2 button{
+    height: 9vh;
+    width: 38vw;
+}
+#table1 button{
+    height: 9vh;
+    width: 38vw;
+}
+}
+ 

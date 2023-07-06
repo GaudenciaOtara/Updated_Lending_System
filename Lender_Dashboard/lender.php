@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_assoc($updated_commision)) {
 $updated_returns = mysqli_query($conn, "SELECT * FROM agent_returns WHERE lender_id={$user_data['id']}");
 $returns = 0;
 while ($rowss= mysqli_fetch_assoc($updated_returns)) {
-    $returns += $rowss['total_amount'];
+    $returns += $rowss['updated_total'];
 }
 $lender_id = $user_data['id'];
 
@@ -143,6 +143,8 @@ exit();
             <li><a href="reports.php"><img src="./Images/notes-medical.png" alt="#" > &nbsp;<span>Reports</span></a></li>
             <li><a href="settings.php"><img src="./Images/dashboard.png" alt="#" > &nbsp;<span>Settings</span></a></li>
         </ul>
+        <button class="menu-toggle-button">&#9776;</button>
+
     </div>
     <div class="container">
       
@@ -250,7 +252,10 @@ exit();
                         <h2> Transactions</h2>
                         <a href="profit.php" class="btn">View All </a>
                     </div>
-                    <table>
+                                        <!-- <div > -->
+
+                    <table id="table-container">
+
                         <tr>
                             <th>Agent ID</th>
                             <th>Loan</th>
@@ -292,7 +297,10 @@ while ($rows = $res->fetch_assoc()) {
              ?>
                         
                     </table>
+                   
+
                 </div>
+                <!-- </div> -->
                 <div class="profit">
                     <div class="title">
                         <h2> Agents Details</h2>
@@ -303,9 +311,9 @@ while ($rows = $res->fetch_assoc()) {
                    <a href=""> <button>GENERATE  </button></a>
                         
                     </div> -->
-                    <table>
+                    <table id="agent-table">
                     <tr>
-                        <th>ID</th>
+                        <th class="desktop-only">ID</th>
                         <th>Profile</th>
                         <th>Name</th>
                         <th>Account No.</th>
@@ -328,7 +336,7 @@ while ($row = $result->fetch_assoc()) {
  
     ?>
     <tr>
-        <td><?php echo $id_count; ?></td>
+        <td  class="desktop-only"><?php echo $id_count; ?></td>
         <td><img src="./Images/user.png" alt=""></td>
         <td><?php echo $row['username']; ?></td>
         <td><?php echo $row['account_number']; ?></td>
@@ -351,7 +359,76 @@ while ($row = $result->fetch_assoc()) {
     
 
 
- 
+    <script>
+    const menuToggle = document.querySelector(".menu-toggle-button");
+    const sideMenu = document.querySelector(".side-menu");
+
+    menuToggle.addEventListener("click", function () {
+        sideMenu.classList.toggle("show-menu");
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+    var table = document.getElementById('table-container');
+    var rows = table.querySelectorAll('tr');
+
+    function hideColumns() {
+        var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var hideColumns = screenWidth <= 768; // Set the desired breakpoint for hiding columns
+
+        rows.forEach(function(row) {
+            var cells = row.querySelectorAll('th, td');
+            cells.forEach(function(cell, index) {
+                if (hideColumns && (index === 3 || index === 4)) {
+                    cell.style.display = 'none';
+                } else {
+                    cell.style.display = '';
+                }
+            });
+        });
+    }
+
+    hideColumns(); // Initial call to hide columns on page load
+
+    window.addEventListener('resize', function() {
+        hideColumns(); // Call hideColumns() when the window is resized
+    });
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    var table = document.getElementById('agent-table');
+    var thElements = table.querySelectorAll('th.desktop-only');
+    var tdElements = table.querySelectorAll('td.desktop-only');
+
+    function hideColumns() {
+        var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var hideColumns = screenWidth <= 768; // Set the desired breakpoint for hiding columns
+
+        if (hideColumns) {
+            thElements.forEach(function(th) {
+                th.style.display = 'none';
+            });
+            tdElements.forEach(function(td) {
+                td.style.display = 'none';
+            });
+        } else {
+            thElements.forEach(function(th) {
+                th.style.display = '';
+            });
+            tdElements.forEach(function(td) {
+                td.style.display = '';
+            });
+        }
+    }
+
+    hideColumns(); // Initial call to hide columns on page load
+
+    window.addEventListener('resize', function() {
+        hideColumns(); // Call hideColumns() when the window is resized
+    });
+});
+
+</script>
+
 </body>
 </html>
 <?php

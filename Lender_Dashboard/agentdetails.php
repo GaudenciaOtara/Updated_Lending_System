@@ -65,6 +65,8 @@ if (isset($_SESSION['user'])){
             <li><a href="reports.php"><img src="./Images/notes-medical.png" alt="#" > &nbsp;<span>Reports</span></a></li>
             <li><a href="settings.php"><img src="./Images/dashboard.png" alt="#" > &nbsp;<span>Settings</span></a></li>
         </ul>
+        <button class="menu-toggle-button">&#9776;</button>
+
     </div>
     <div class="container">
       
@@ -143,7 +145,7 @@ $id_count++;
     </div>
   </div>           
        
-    
+    <script src="toggle.js"></script>
 </body>
 </html>
 <?php

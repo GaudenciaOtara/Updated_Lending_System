@@ -73,6 +73,9 @@ th,td{
 .side-menu li:hover{
     background: red;
     color: white;
+    border-radius: 10px;
+    width: 16vw;
+    margin-left: 5%;
 }
 .container{
     position: absolute;
@@ -119,9 +122,7 @@ th,td{
 .container .header .nav .search button{
     width: 40px;
     height: 40px;
-    /* position: absolute;
-    left: 25%;
-    top: 5%; */
+    
 }
 .container .header .nav .search button img{
     width: 30px;
@@ -129,7 +130,6 @@ th,td{
 }
 .container .content{
     position: relative;
-    /* margin-top: 10vh; */
     min-height: 90hv;
     margin-top: 1%;
 }
@@ -323,3 +323,173 @@ footer{
     background-color: #0199fe;
     height: 10vh;
 }
+
+/* Responsiveness code */
+ 
+
+.menu-toggle-button {
+    display: none; 
+    border: none; 
+    background-color: #0199fe;
+}
+.menu-toggle-button:focus{
+    border: none;
+    outline: 0;
+    padding: 1%;
+}
+
+@media screen and (max-width: 540px) {
+    body{
+        height: 100vw;
+        width: fit-content;
+    }
+    .side-menu{
+        width: 23vw;
+        width: 100vw;
+        position: static;
+        height: 10vh;
+        min-height: 12vh;
+        margin-bottom: 1%;
+        display: flex;
+        flex-direction: row;
+    }
+    .side-menu ul {
+        display: none;  
+    }
+    .side-menu li:hover{
+
+        width: 42vw;
+        margin-left: 1%;
+    }
+    .side-menu.show-menu ul {
+        position: absolute;
+        width: 48vw;
+        top: 12%;
+        left: 51.5%;
+        background-color: #0199fe;
+        padding: 2%;
+        display: block; 
+        /* height: 100%; */
+        box-shadow: 1px 1px 1px 1px #0199fe;
+    }
+    .side-menu li{
+        font-size: 15px;
+        margin-top: 2%;
+        padding: 1%;
+        height: 10vh;
+        margin-top: 2%;
+     }
+     .side-menu h1{
+        font-weight: bold;
+        padding-left: 2%;
+        margin-left: 5%;
+        font-size: 25px;
+     }
+    .menu-toggle-button {
+        display: block;  
+        cursor: pointer;
+        margin-left: 60%;
+    }
+   
+    .container{
+        position: static;
+        /* right: 0; */
+        width: 100vw;
+        padding-left: 0;
+        height: 100vh;
+     }
+    .container .header{
+        width:100vw;
+        height: 15vh;
+    }
+    .container .header .nav{
+        width: 100vw;
+    
+    }
+    .container .header .nav .search{
+     
+        justify-content: center;
+        /* margin-left: 5%; */
+    }
+    .container .header .nav .search img{
+        width: 15vw;
+    }
+    .container .content{
+        position: static;
+        min-height: 90hv;
+        margin-top: 0.5%;
+    }
+    .container .content .cards{
+        padding: 2%;
+        display: block;
+        align-items: center;
+    }
+    .container .content .cards .cards{
+        width: 210px;
+        height: 27vh;
+        margin: 20px 10px;
+        display: flex;
+        align-items: center;
+        padding: 2%;
+        width: 90vw;
+    }
+    .icon-class-1 .btn{
+        width: 40vw;
+        height: 8vh;
+        text-align: center;
+    }
+    .icon-class .btn{
+        text-align: center;
+        /* padding-top: 2%; */
+        width: 40vw;
+        height: 10vh; 
+    }
+    .container .content .content-2{
+        min-height: 60vh;
+        display: flex;
+        /* display: block; */
+        width: 50vw;
+        justify-content: space-around;
+        justify-items: auto;
+        align-items: flex-start;
+        margin-left: 2%;
+    }
+
+    .container .content .content-2 .money-returned{
+        min-height: 50vh;
+        flex: 5;
+        /* margin: 0 25px 25px 25px; */
+        margin-left: 99%;
+         display: flex;
+        flex-direction: column;
+    }
+    .Balance input{
+        margin-top: 5%;
+    }
+    .title .btn{
+      height: 6vh;
+      margin-left: 1.5%;
+    }
+    .container .content .content-2 .profit{
+        min-height: 50vh;
+        flex: 0;
+        /* width: 98vw; */
+        margin-left: 92%;
+        padding-left: 3%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container .content .content-2 .profit{
+        min-height: 50vh;
+        flex: 5;
+        margin-left: 105%;
+        width: 99vw;
+         display: flex;
+        flex-direction: column;
+    }
+     .title h2{
+        font-size: 25px;
+     }
+    
+}
+ 

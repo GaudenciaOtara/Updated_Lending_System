@@ -18,10 +18,10 @@ $statement->bind_param("s", $user_data["account_number"]);
 $statement->execute();
 $result = $statement->get_result();
  
-$updated_commision_balance = mysqli_query($conn, "SELECT * FROM agent_commision WHERE agent_account_number='$acc_no'");
+$updated_commision_balance = mysqli_query($conn, "SELECT * FROM agent_returns WHERE agent_account_number='$acc_no'");
 $total_commision = 0;
 while ($row = mysqli_fetch_assoc($updated_commision_balance)) {
-    $total_commision += $row['commision'];
+    $total_commision += $row['expected_commision'];
 }
 if (isset($_POST['return'])){
   $unique_code=$_POST['unique_code'];
@@ -29,10 +29,12 @@ if (isset($_POST['return'])){
   $agent_acc_no=$_POST['agent_account_number'];
   $amount_sent = $_POST['total_amount'];
   $commision = $_POST['expected_commision'];
+  $updated_total = $_POST['updated_total'];
+
   // $ID = $_POST['customer_id'];
 
-  $statement= $conn->prepare("INSERT into agent_returns (unique_code,lender_id,agent_account_number,total_amount,expected_commision) VALUES (?,?,?,?,?)");
-  $statement->bind_param("siidd",$unique_code,$lender_id,$agent_acc_no,$amount_sent,$commision);
+  $statement= $conn->prepare("INSERT into agent_returns (unique_code,lender_id,agent_account_number,total_amount,expected_commision,updated_total) VALUES (?,?,?,?,?,?)");
+  $statement->bind_param("siiddd",$unique_code,$lender_id,$agent_acc_no,$amount_sent,$commision,$updated_total);
   $statement->execute();
   $statement->close();
   header("Location: ./agent.php");
@@ -56,13 +58,15 @@ if (isset($_POST['return'])){
 
     <link rel="stylesheet" href="agent.css">
 
-    <title>Agents Dasboard</title>
+    <title>Agents Dashboard</title>
 </head>
 <body>
 
     <div class="sidemenu">
         <div class="title">
             <h1>Agent</h1></div>
+            <button class="menu-toggle-button">&#9776;</button>
+
         <ul class="menu">
             <li class="active">
                 <a href="details.php">
@@ -118,7 +122,10 @@ if (isset($_POST['return'])){
                 </a>
             </li>
         </ul>
+
     </div>
+    <!-- <button class="menu-toggle-button">&#9776;</button> -->
+
     <div class="content">
         <div class="header-wrapper">
             <div class="header-title">
@@ -134,6 +141,7 @@ if (isset($_POST['return'])){
      <div class="dashboard" style="margin-left:21%;margin-top:0; margin-bottom:2%; font-weight:bold;";>
         <a href="agent.php">Dashboard</a>
      </div>
+     <div class="main-buttons">
     <div class="display-commision">
         <div class="commision-box">
         <img src="assets/sack-dollar.png" alt=""><br>
@@ -150,6 +158,7 @@ if (isset($_POST['return'])){
     </div>
  
         </div>
+        </div>
          <!-- Send Bootstrap Modal -->
       <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -164,24 +173,29 @@ if (isset($_POST['return'])){
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
           <div class="form-group">
             <label for="input1">Unique Code</label>
-            <input type="text" class="form-control" id="input1" placeholder="Enter value" name="unique_code">
+            <input type="text" class="form-control" id="input1" placeholder="Enter value" name="unique_code" readonly>
           </div>
           <div class="form-group">
             <label for="input2">Lender ID</label>
-            <input type="text" class="form-control" id="input2" placeholder="Enter value" name="lender_id">
+            <input type="text" class="form-control" id="input2" placeholder="Enter value" name="lender_id" readonly>
           </div>
           <div class="form-group">
             <label for="input3">Agent Account Number</label>
-            <input type="text" class="form-control" id="input3" placeholder="Enter value" name="agent_account_number">
+            <input type="text" class="form-control" id="input3" placeholder="Enter value" name="agent_account_number" readonly>
           </div>
           <div class="form-group">
             <label for="input4">Total Amount Sent</label>
-            <input type="text" class="form-control" id="input4" placeholder="Enter value" name="total_amount">
+            <input type="text" class="form-control" id="input4" placeholder="Enter value" name="total_amount" readonly>
           </div>
           <div class="form-group">
             <label for="input5">Expected Commission</label>
-            <input type="text" class="form-control" id="input5" placeholder="Enter value" name="expected_commision">
+            <input type="text" class="form-control" id="input5" placeholder="Enter value" name="expected_commision" readonly>
           </div>
+          <div class="form-group">
+        <label for="input6">Updated Total</label>
+        <input type="text" class="form-control" id="input6" placeholder="Updated Total" name="updated_total" readonly>
+         </div>
+
           <div class="form-group">
             <label for="select">Dropdown Select</label>
             <select class="form-control" id="select" onchange="fetchData(this.value)">
@@ -222,8 +236,8 @@ if (isset($_POST['return'])){
                         <th>ID</th>
                         <th>Customer Number</th>
                         <th>Amount Lent</th>
-                        <th>Total Amount(+Interest) </th>
-                        <th>Time Allocated</th>
+                        <th class="table-hide">Total Amount(+Interest) </th>
+                        <th class="table-hide">Time Allocated</th>
                         <th>Unique Code</th>
                     </tr>
                     <?php
@@ -249,8 +263,8 @@ if (isset($_POST['return'])){
                 <td><?php echo $id_count; ?></td>
                 <td><?php echo $row['customer_number']; ?></td>
                 <td><?php echo $row['amount_lent']; ?></td>
-                <td><?php echo $row['total_amount']; ?></td>
-                <td><?php echo $row['time_allocated']; ?></td>
+                <td class="table-hide"><?php echo $row['total_amount']; ?></td>
+                <td class="table-hide"><?php echo $row['time_allocated']; ?></td>
 
                 <td><?php echo $row['unique_code']; ?></td>
 
@@ -262,7 +276,7 @@ if (isset($_POST['return'])){
                 </div>
                     
                 <!-- </table> -->
-              
+              <script src="toggle.js"></script>
            <!-- Modal Updating Javascript -->
 <script>
   function fetchData(selectedValue) {
@@ -276,6 +290,13 @@ if (isset($_POST['return'])){
         document.getElementById('input3').value = response.agentAccountNumber;
         document.getElementById('input4').value = response.totalAmountSent;
         document.getElementById('input5').value = calculateExpectedCommission(response.totalAmountSent);
+
+
+           // Calculate and populate the Updated Total field
+      var totalAmount = parseFloat(response.totalAmountSent);
+      var expectedCommission = parseFloat(calculateExpectedCommission(response.totalAmountSent));
+      var updatedTotal = (totalAmount - expectedCommission).toFixed(2);
+      document.getElementById('input6').value = updatedTotal;
       },
       error: function() {
         // Handle errors if any

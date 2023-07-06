@@ -47,6 +47,9 @@ $remainingTotal=$totalamount-$remamount+$total_top_up;
 
 
 
+
+
+
 if (isset($_POST['send'])){
     $agent_id=$_POST['agent_id'];
     $amount_sent = $_POST['amount_sent'];
@@ -160,11 +163,11 @@ if (isset($_POST['send'])){
      <div class="totals">
         <div class="totals-class">
         <label for="total_loan_amount">Total Loan Amount</label>
-        <input type="text" value="<?php echo $totalamount;?>"></div>
+        <input type="text" value="<?php echo $totalamount;?>" readonly></div>
         <div class="totals-class">
         <label for="total_loan_amount">Total Interest Accumulated</label>
 
-        <input type="text"  value="<?php echo $expectedInterest;?>">
+        <input type="text"  value="<?php echo $expectedInterest;?>" readonly>
         </div>
      </div>
      <div class="table" style="margin-top:3%;">

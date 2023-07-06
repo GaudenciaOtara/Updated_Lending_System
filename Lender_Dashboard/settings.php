@@ -58,6 +58,8 @@ $user_data = mysqli_fetch_assoc($user_query);
             <li><a href="reports.php"><img src="./Images/notes-medical.png" alt="#" > &nbsp;<span>Reports</span></a></li>
             <li><a href="settings.php"><img src="./Images/dashboard.png" alt="#" > &nbsp;<span>Settings</span></a></li>
         </ul>
+        <button class="menu-toggle-button">&#9776;</button>
+
     </div>
     <div class="container">
       
@@ -165,6 +167,8 @@ $user_data = mysqli_fetch_assoc($user_query);
     </div>
     <button class="btn-danger logout" id="delete"> <a href="logout.php"> LOG OUT </a></button>
 </div>
+<script src="toggle.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function() {

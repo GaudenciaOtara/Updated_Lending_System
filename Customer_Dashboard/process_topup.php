@@ -8,8 +8,8 @@ $amount = htmlspecialchars($_POST["amount"]);
 $customer_id = htmlspecialchars($_POST["customer_id"]);
 
 
-$consumer_key = 'xnyvQOOf8je1X4PtHKQmPGQj3d9ATYRQ';
-$consumer_secret = 'GWNYyWrOIsKQfqpn';
+$consumer_key = 'bwDAllYAiOKyynuKSdwQcGUODRBO4pGg';
+$consumer_secret = 'UZ6GGwxXXA5VmTIP';
 
 $Business_Code = '174379';
 $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
